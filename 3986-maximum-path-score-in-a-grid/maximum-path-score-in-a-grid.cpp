@@ -1,64 +1,45 @@
 class Solution {
 public:
-static bool pathexist;
-int f(int i,int j,int remaincost,int n,int m,vector<vector<int>>&grid,
- vector<vector<vector<int>>>&dp){
-    if(i>=n || j>=m) return -1e8;
-    if(remaincost<0) return -1e8;
-    if(i==n-1 && j==m-1){
-        int cell=grid[i][j];
-        if(cell==0){
-            pathexist=true;
+ int m, n;
 
-            return 0;
-        }
-        if(cell==1 && remaincost >=1){
-            pathexist=true;
-            return 1;
-        }
-        if(cell ==2 && remaincost>=1){
-            pathexist=true;
-            return 2;
-        }
-        return -1e8;
+    int solve(vector<vector<int>>& grid, int k, int i, int j, int cost, vector<vector<vector<int>>>& t) {
+        if(i >= m || j >= n)
+            return INT_MIN;
+        
+        int newCost = cost + (grid[i][j] > 0);
 
+        if(newCost > k)
+            return INT_MIN;
+        
+        if(i == m-1 && j == n-1)
+            return grid[i][j]; //score
+        
+        if(t[i][j][cost] != -1) {
+            return t[i][j][cost];
+        }
+        
+        //down
+        //right
+        int down  = solve(grid, k, i+1, j, newCost, t);
+        int right = solve(grid, k, i, j+1, newCost, t);
+
+        int bestNext = max(down, right);
+
+        if(bestNext == INT_MIN) {
+            return t[i][j][cost] = INT_MIN;
+        }
+
+        return t[i][j][cost] = grid[i][j] + bestNext;
     }
-   if(dp[i][j][remaincost]!=INT_MIN){
-    return dp[i][j][remaincost];
-   }
-   int cell=grid[i][j];
-   int right,down;
-   if(cell==0){
-    right=f(i,j+1,remaincost,n,m,grid,dp);
-    down=f(i+1,j,remaincost,n,m,grid,dp);
-
-   }
-   else if(cell==1){
-     right=1+f(i,j+1,remaincost-1,n,m,grid,dp);
-    down=1+f(i+1,j,remaincost-1,n,m,grid,dp);
-   }
-   else{
-    right=2+f(i,j+1,remaincost-1,n,m,grid,dp);
-    down=2+f(i+1,j,remaincost-1,n,m,grid,dp);
-   }
-
-     
-  return dp[i][j][remaincost]=max(right,down);
-    
-
-}
 
     int maxPathScore(vector<vector<int>>& grid, int k) {
-        int n=grid.size();
-        int m=grid[0].size();
-        pathexist=false;
-     vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(k+1,
-     INT_MIN)));
-     int ans=f(0,0,k,n,m,grid,dp);
+        m = grid.size();
+        n = grid[0].size();
 
-       return pathexist ? ans:-1;
+        vector<vector<vector<int>>> t(m+1, vector<vector<int>>(n+1, vector<int>(k + 1, -1)));
 
+        int result = solve(grid, k, 0, 0, 0, t);
 
+        return result == INT_MIN ? -1 : result;
     }
 };
-bool Solution::pathexist = false;
