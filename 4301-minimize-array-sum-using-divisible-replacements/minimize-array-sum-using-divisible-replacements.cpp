@@ -15,16 +15,15 @@ public:
         break;
     }
     factorial.push_back(x/i);
-
    }
-   while(!factorial.empty()){
-    int y=factorial.back();
-    factorial.pop_back();
-    if(mpp[y]){
-        x=min(x,y);
-         break;
+    while(!factorial.empty()){
+        int y=factorial.back();
+        factorial.pop_back();
+        if(mpp[y]){
+           x= min(x,y);
+           break;
+        }
     }
-   }
    }
    return accumulate(nums.begin(),nums.end(),0LL);
 
