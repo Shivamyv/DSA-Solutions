@@ -1,6 +1,6 @@
 class Solution {
 public:
- int bfs(int n, vector<vector<int>>& edges, int source, int target, int k,int threshold){
+ bool bfs(int n, vector<vector<int>>& edges, int source, int target, int k,int threshold){
         vector<pair<int,int>>adj[n];
         for(auto it:edges){
             int u=it[0];
@@ -26,14 +26,14 @@ public:
                 int adjNode = it.first;
                 int wt = it.second;
 
-                // heavy edge => cost 1
+                
                 int cost = (wt > threshold) ? 1 : 0;
 
                 if(dist[node] + cost < dist[adjNode]) {
 
                     dist[adjNode] = dist[node] + cost;
 
-                    // 0-1 BFS
+                   
                     if(cost == 0)
                         dq.push_front(adjNode);
                     else
@@ -44,17 +44,10 @@ public:
 
         return dist[target] <= k;
 
-
-
-
  }
 
-
     int minimumThreshold(int n, vector<vector<int>>& edges, int source, int target, int k) {
-        
-
-    if(source==target) return 0;
-
+    
 
         int low=0,high=1e9;
         int ans=-1;
