@@ -6,49 +6,43 @@ public:
             int u=it[0];
             int v=it[1];
             int wt=it[2];
-            adj[u].push_back({v,wt});
-            adj[v].push_back({u,wt});
+            int cost=(wt>threshold ? 1:0);
+            adj[u].push_back({v,cost});
+            adj[v].push_back({u,cost});
         }
          vector<int> dist(n, INT_MAX);
-
-        deque<int> dq;
-
-        dist[source] = 0;
-        dq.push_front(source);
-
-        while(!dq.empty()) {
-
-            int node = dq.front();
-            dq.pop_front();
-
-            for(auto &it : adj[node]) {
-
-                int adjNode = it.first;
-                int wt = it.second;
-
-                
-                int cost = (wt > threshold) ? 1 : 0;
-
-                if(dist[node] + cost < dist[adjNode]) {
-
-                    dist[adjNode] = dist[node] + cost;
-
-                   
-                    if(cost == 0)
-                        dq.push_front(adjNode);
-                    else
-                        dq.push_back(adjNode);
-                }
-            }
+    priority_queue<
+        pair<int,int>,
+        vector<pair<int,int>>,
+        greater<pair<int,int>>
+    > pq;
+    dist[source]=0;
+    pq.push({0,source});
+    while(!pq.empty()){
+      auto [d,node]=pq.top();
+      pq.pop();
+      if(d>dist[node])continue;
+      for(auto it:adj[node]){
+        int adjnode=it.first;
+        int cost=it.second;
+        if(dist[node]+cost<dist[adjnode]){
+            dist[adjnode]=dist[node]+cost;
+            pq.push({dist[adjnode],adjnode});
         }
+      }
 
-        return dist[target] <= k;
+
+
+    }
+
+
+      return dist[target]<=k;  
 
  }
 
     int minimumThreshold(int n, vector<vector<int>>& edges, int source, int target, int k) {
     
-
+      if(source==target) return 0;
         int low=0,high=1e9;
         int ans=-1;
         while(low<=high){
