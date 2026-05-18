@@ -28,6 +28,7 @@ public:
           }
            for(auto it:mpp[arr[node]]){
             if(vis[it]==0){
+                vis[it]=1;
                 q.push({it,cnt+1});
             }
            }
