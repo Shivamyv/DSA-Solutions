@@ -5,21 +5,17 @@ public:
     int n=maze[0].size();
     int r=entrance[0];
     int c=entrance[1];
-    
-    vector<vector<int>>vis(m,vector<int>(n,0));
+    vector<vector<int>>vis(m+1,vector<int>(n+1,0));
     queue<pair<pair<int,int>,int>> q;
     q.push({{r,c},0});
     vis[r][c]=1;
-    
    int dr[4]={-1,0,+1,0};
    int dc[4]={0,+1,0,-1};
    while(!q.empty()){
     auto it=q.front();
     int rr=it.first.first;
     int rc=it.first.second;
-
     int steps=it.second;
-
     q.pop();
     for(int i=0;i<4;i++){
         int nrow=rr+dr[i];
@@ -34,17 +30,11 @@ public:
 
         }
    
-        
     }
-
    }
-
    return -1;
 
  }
-
-
-
     int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
      int m=maze.size();
      int n=maze[0].size();
