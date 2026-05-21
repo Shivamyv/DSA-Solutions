@@ -1,9 +1,10 @@
 class Solution {
 public:
-  vector<vector<int>> bfs(int sr, int sc, int color, vector<vector<int>>&vis,vector<vector<int>>& image){
-     int m=image.size();
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+       int m=image.size();
        int n=image[0].size();
-    int incolor=image[sr][sc];
+       vector<vector<int>>vis(m,vector<int>(n,false));
+       int incolor=image[sr][sc];
     queue<pair<int,int>>q;
     q.push({sr,sc});
     vis[sr][sc]=true;
@@ -32,14 +33,5 @@ public:
     }
     }
     return image;
-
- }
-
-
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-       int m=image.size();
-       int n=image[0].size();
-       vector<vector<int>>vis(m,vector<int>(n,false));
-       return bfs(sr,sc,color,vis,image);
     }
 };
