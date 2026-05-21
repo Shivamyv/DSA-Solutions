@@ -1,11 +1,12 @@
 class Solution {
 public:
-   bool bfs(vector<vector<int>>& rooms, vector<int>&vis){
-    int V=rooms.size();
+   bool bfs(vector<vector<int>>& rooms){
+     int V=rooms.size();
+     vector<int>vis(V,0);
+
      queue<int>q;
-     int node=0;
-     q.push(node);
-     vis[node]=1;
+     q.push(0);
+     vis[0]=1;
      while(!q.empty()){
         auto nodes=q.front();
         q.pop();
@@ -28,9 +29,8 @@ public:
 
 
     bool canVisitAllRooms(vector<vector<int>>& rooms) {
-        int V=rooms.size();
-        vector<int>vis(V,0);
-        return bfs(rooms,vis);
+       
+        return bfs(rooms);
 
     }
 };
