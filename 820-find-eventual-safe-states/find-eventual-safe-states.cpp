@@ -1,51 +1,49 @@
 class Solution {
-private:
-bool dfs(int node,vector<vector<int>>& graph,vector<int>&vis,
-vector<int>&pathvis,vector<int>&check){
-    vis[node]=1;
-    pathvis[node]=1;
-    check[node]=0;
-    for(auto it: graph[node]){
-        if(!vis[it]){
-            if(dfs(it,graph,vis,pathvis,check)==true){
-                check[node]=0;
-                return true;
+public:
+vector<int>topo(int V,vector<int>adj[]){
+    
+    vector<int>outdegree(V,0);
+    for(int i=0;i<V;i++){
+        for(auto it:adj[i]){
+            outdegree[it]++;
+        }
+    }
+    queue<int>q;
+    for(int i=0;i<V;i++){
+        if(outdegree[i]==0) q.push(i);
+        
+    }
+    vector<int>safenode;
+    while(!q.empty()){
+        int node=q.front();
+        q.pop();
+        safenode.push_back(node);
+        for(auto it:adj[node]){
+            outdegree[it]--;
+            if(outdegree[it]==0) q.push(it);
+        }
+
+
+    }
+    
+    sort(safenode.begin(),safenode.end());
+    return safenode;
+
+}
+
+
+
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int V=graph.size();
+       vector<int>adj[V];
+        for(int i=0;i<V;i++){
+            for(auto it:graph[i]){
+                adj[it].push_back(i);
             }
         }
-        else if(pathvis[it]){
-           check[node]=0;
-            return true;
-        }
-    }
-    check[node]=1;
-    pathvis[node]=0;
-    return false;
+      return topo(V,adj);
 
 
-}
 
-
-public:
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-      int V=graph.size();
-       vector<int>vis(V,0);
-   vector<int>pathvis(V,0);
-   vector<int>check(V,0); 
-   vector<int>safenodes;
-  for(int i=0;i<V;i++){
-    if(!vis[i]){
-        dfs(i,graph,vis,pathvis,check);
-    }
-}
-
-   for(int i=0;i<V;i++){
-    if(check[i]==1){
-    safenodes.push_back(i);
-    }
-   }
-
-   return safenodes;
-
-        
     }
 };
