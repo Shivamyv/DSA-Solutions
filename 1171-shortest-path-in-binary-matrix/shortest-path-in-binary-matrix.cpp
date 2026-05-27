@@ -1,41 +1,55 @@
 class Solution {
 public:
-    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-         int n=grid.size();
-      
-      if(grid[0][0]==1 || grid[n-1][n-1]==1)
-      return -1;      
-     
-      vector<vector<int>> dist(n,vector<int>(n,1e9));
-      dist[0][0]=1;
-       queue<pair<int,int>>q; 
-     
-      q.push({0,0});
-     int dr[]={-1,-1,0,+1,+1,+1,0,-1};
-     int dc[]={0,+1,+1,+1,0,-1,-1,-1};
-     while(!q.empty()){
-       auto it=q.front();
-       q.pop();
-      
-       int r=it.first;
-       int c=it.second;
-        int dis=dist[r][c];
-         if (r == n-1 && c == n-1) return dis;
-      for(int i=0;i<8;i++){
-        int nrow=r+dr[i];
-        int ncol=c+dc[i];
-        if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && 
-        grid[nrow][ncol]==0 && dis+1 < dist[nrow][ncol] ){
-            dist[nrow][ncol]=dis+1;
-            
-            
-            q.push({nrow,ncol});
+ int bfs(int i,int j,vector<vector<int>>& grid, vector<vector<int>>&vis){
+    int n=grid.size();
+    queue<pair<pair<int,int>,int>>q;
+    q.push({{i,j},1});
+    vis[i][j]=1;
+    int dr[]={-1,-1,0,+1,+1,+1,0,-1};
+    int dc[]={0,+1,+1,+1,0,-1,-1,-1};
+
+    while(!q.empty()){
+          auto it=q.front();
+          q.pop();
+          int row=it.first.first;
+          int col=it.first.second;
+          int steps=it.second;
+          if(row==n-1 && col==n-1) return steps;
+
+          for(int i=0;i<8;i++){
+              int nrow=row+dr[i];
+              int ncol=col+dc[i];
+        if(nrow>=0 && ncol>=0 && nrow<n && ncol<n && !vis[nrow][ncol]&& 
+        grid[nrow][ncol]==0){
+            q.push({{nrow,ncol},steps+1});
+            vis[nrow][ncol]=1;
+
+               
+        
         }
 
-      }
 
-     }
-     return -1;
-        
+          }
+          
+
+    }
+     return -1; 
+
+ }
+
+
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+      int n=grid.size();
+      if(grid[0][0]==1 || grid[n-1][n-1]==1) return -1;
+
+
+      vector<vector<int>>vis(n,vector<int>(n,0));
+       return bfs(0,0,grid,vis);
+           
+       
+
+
+   
+
     }
 };
