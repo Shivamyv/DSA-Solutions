@@ -9,25 +9,25 @@ public:
         adj[u].push_back({v,wt});
       }
      vector<int>dist(n+1,1e9);
-     priority_queue<pair<int,pair<int,int>>,
-     vector<pair<int,pair<int,int>>>,
-     greater<pair<int,pair<int,int>>>>pq;
+     priority_queue<pair<int,int>,
+     vector<pair<int,int>>,
+     greater<pair<int,int>>>pq;
 
-     pq.push({0,{0,k}});
+     pq.push({0,k});
      dist[k]=0;
      while(!pq.empty()){
         auto it=pq.top();
         pq.pop();
-        int time=it.first;
-        int distnode=it.second.first;
-        int  node=it.second.second;
+      
+        int distnode=it.first;
+        int  node=it.second;
 
          for(auto it:adj[node]){
             int adjnode=it.first;
             int edgewt=it.second;
             if(distnode+edgewt<dist[adjnode]){
                 dist[adjnode]=distnode+edgewt;
-                pq.push({time+1,{distnode+edgewt,adjnode}});
+                pq.push({distnode+edgewt,adjnode});
 
             }
          }
