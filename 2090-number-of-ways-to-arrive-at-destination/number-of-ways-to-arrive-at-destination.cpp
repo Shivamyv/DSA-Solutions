@@ -4,9 +4,12 @@ public:
     int countPaths(int n, vector<vector<int>>& roads) {
         vector<pair<int, int>> adj[n];
         for (auto it : roads) {
-            adj[it[0]].push_back({it[1], it[2]});
-            adj[it[1]].push_back({it[0], it[2]});
-        }
+           int u=it[0];
+           int v=it[1];
+           int wt=it[2];
+           adj[u].push_back({v,wt});
+           adj[v].push_back({u,wt});
+        }  
         priority_queue<pair<long long,int>,vector<pair<long long, int>>,
                        greater<pair<long long,int>>> pq;
         vector<long long> mindist(n, LLONG_MAX);
