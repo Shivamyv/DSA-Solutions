@@ -1,40 +1,58 @@
 class Solution {
 public:
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-           
-    vector<vector<int>>adj(n,vector<int>(n,1e9));
-    for(auto it:edges){
-        adj[it[0]][it[1]]=it[2];
-        adj[it[1]][it[0]]=it[2];
+         vector<pair<int,int>>adj[n];
+         
+         int city=-1,maxcount=n;
+         for(auto it:edges){
+            int u=it[0];
+            int v=it[1];
+            int wt=it[2];
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
 
-    }
-    for(int k=0;k<n;k++){
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                adj[i][j]=min(adj[i][j],adj[i][k]+adj[k][j]);
+
+         }   
+     
+      priority_queue<pair<int,int>,
+      vector<pair<int,int>>,
+      greater<pair<int,int>>>pq;
+      
+       for(int src=0;src<n;src++){
+         vector<int>dis(n,1e9);
+      pq.push({0,src});
+      dis[src]=0;
+      while(!pq.empty()){
+
+        auto it=pq.top();
+        pq.pop();
+        int dist=it.first;
+        int node=it.second;
+        for(auto it:adj[node]){
+            int adjnode=it.first;
+            int edgewt=it.second;
+            if(dist+edgewt<dis[adjnode]){
+              dis[adjnode]=dist+edgewt;
+              pq.push({dist+edgewt,adjnode});
+
             }
+
         }
-    }
-    int mincount=1e9;
-    int ans=0;
-   for(int i=0;i<n;i++){
-     int count=0;
-     for(int j=0;j<n;j++){
-        if( i!=j && adj[i][j]<=distanceThreshold){
-            count++;
-        }
-     }
-       if(count<mincount) {
-        mincount=count;
-        ans=i;
+      }
+      
+      int cnt=0;
+      for(int i=0;i<n;i++){
+        if(i!=src && dis[i]<=distanceThreshold) cnt++;
+      }  
+       
+      if(cnt<=maxcount){
+        maxcount=cnt;
+        city=src;
+      }
        }
-       else if(count==mincount) {
-        ans=i;
-       }
-   }
+    
+  
 
-   return ans;
-
-
+    return city;
     }
 };
