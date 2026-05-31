@@ -4,17 +4,16 @@ public:
       int n=asteroids.size();
       sort(asteroids.begin(),asteroids.end());
         long long sum=mass;
-        bool ans=false;
+       
         for(int i=0;i<n;i++){
-            if(sum >=asteroids[i]){
-                 ans=true;
+            if(sum <asteroids[i]){
+                 return false;
+            }
             sum+=asteroids[i];
-            }
-            else {
-                ans=false;
-            }
+            
+            
         }
-        return ans;
+        return true;
 
 
     }
