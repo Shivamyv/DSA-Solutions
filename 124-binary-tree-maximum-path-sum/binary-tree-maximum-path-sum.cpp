@@ -11,24 +11,20 @@
  */
 class Solution {
 public:
-   int findMaxPathSum(TreeNode*root,int&maxi){
-    if(root==nullptr){
-        return 0;
-    }
+ int dfs(int &maxi,TreeNode*node){
+    if(node==nullptr) return 0;
 
-    int leftmaxpath=max(0,findMaxPathSum(root->left,maxi));
-    int rightMaxPath=max(0,findMaxPathSum(root->right,maxi));
-    maxi=max(leftmaxpath+rightMaxPath+root->val,maxi);
+    int left=max(0,dfs(maxi,node->left));
+    int right=max(0,dfs(maxi,node->right));
+     maxi=max(maxi,left+right+node->val);
+    return max(left,right)+node->val;
 
-    return max(leftmaxpath,rightMaxPath)+root->val;
-}
+ }
 
 
     int maxPathSum(TreeNode* root) {
-      int maxi=INT_MIN;
-    findMaxPathSum(root,maxi);
-
-   return maxi;
-
+        int maxi=INT_MIN;
+         dfs(maxi,root);
+         return maxi;
     }
 };
