@@ -10,22 +10,18 @@
  * };
  */
 class Solution {
-    private: 
-     int height(TreeNode* node) {
-        if (node == nullptr) return 0;
-        return 1 + max(height(node->left), height(node->right));
-    }
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
-     if(root==nullptr) return 0;
-     
-     int leftheight=height(root->right);
-     int rightheight=height(root->left);
-
-    int diameter=leftheight+rightheight;
-   int leftdiameter=diameterOfBinaryTree(root->left);
-   int rightdiameter=diameterOfBinaryTree(root->right);
-    return max(diameter,max(leftdiameter,rightdiameter));
+   int diameter=0;
+       int dfs(TreeNode*node){
+        if(node==nullptr) return 0;
+       int left=dfs(node->left);
+       int right=dfs(node->right);
+       diameter=max(diameter,(left+right));
+       return 1 +max(left,right);
+       } 
+       int diameterOfBinaryTree(TreeNode* root) {  
+        dfs(root);
+        return diameter;
 
     }
 };
