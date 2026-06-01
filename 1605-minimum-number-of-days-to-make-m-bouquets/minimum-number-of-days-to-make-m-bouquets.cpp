@@ -1,45 +1,46 @@
 class Solution {
 public:
- bool possible(vector<int>& bloomDay,int day, int m, int k){
+  bool f(vector<int>& bloomDay, int m, int k,int days){
      int n=bloomDay.size();
-     int cnt=0;
-     int nobucket=0;
+      int cnt=0;
+      int bouqets=0;
      for(int i=0;i<n;i++){
-       if(bloomDay[i]<=day) cnt++;
-       else{
-        nobucket+=cnt/k;
-        cnt=0;
-       }
+        if(bloomDay[i]<=days){
+            cnt++;
+            if(cnt==k) {
+                bouqets++;
+            cnt=0;
+            }
+
+        }
+        else{
+            cnt=0;
+        }
      }
-       nobucket+=cnt/k;
-       return nobucket>=m;
+     return bouqets>=m;
+      
+    
+  }
 
- }
+
+
     int minDays(vector<int>& bloomDay, int m, int k) {
-        int n=bloomDay.size();
-        long long val = m * 1ll * k * 1ll; 
-        if (val > n) return -1; 
+     
+     int low=1;
 
-      int minelement=INT_MAX,maxelement=INT_MIN;
-      for(int i=0;i<n;i++){
-        minelement=min(minelement,bloomDay[i]);
-        maxelement=max(maxelement,bloomDay[i]);
-      }
-        
-        int low=minelement,high=maxelement ,ans=-1;
-        while(low<=high){
-            int mid=low+(high-low)/2;
-            
-            if(possible(bloomDay,mid,m,k)){
-                ans=mid;
-                high=mid-1;
-            }
-                else{
-                     low=mid+1;
-                }
-            }
-        
-       return ans;
+     int high=*max_element(bloomDay.begin(),bloomDay.end());
+     long long ans=-1;
+     while(low<=high){
+        int mid=low+(high-low)/2;
+        if(f(bloomDay,m,k,mid)){
+         ans=mid;
+         high=mid-1;
+        }
+        else{
+            low=mid+1;
+        }
+     }
+     return ans;
 
     }
 };
