@@ -12,8 +12,6 @@ public:
         cnt++;
         sum=weights[i];
        }
-         
-
       }
       return cnt<=days;
      
@@ -23,11 +21,11 @@ public:
      int n=weights.size();
      int low=*max_element(weights.begin(),weights.end());
      int high=accumulate(weights.begin(),weights.end(),0);
-     long long ans=-1;
+    
      while(low<=high){
         int mid=low+(high-low)/2;
         if(possible(weights,days,mid)){
-            ans=mid;
+          
             high=mid-1;
         }
         else{
@@ -36,7 +34,7 @@ public:
 
 
      }
-     return ans;
+     return low;
         
     }
 };
