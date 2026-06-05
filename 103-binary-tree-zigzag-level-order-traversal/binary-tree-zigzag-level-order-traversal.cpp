@@ -12,59 +12,34 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-     vector<vector<int>> result;
-
-       
-        if (root == nullptr) {
-            return result;
-        }
-
-       
-        queue<TreeNode*> nodesQueue;
-        nodesQueue.push(root);
-
-      
-        bool leftToRight = true;
-
-       
-        while (!nodesQueue.empty()) {
-           
-            int size = nodesQueue.size();
-
-            
-            vector<int> row(size);
-
-           
-            for (int i = 0; i < size; i++) {
-               
-                TreeNode* node = nodesQueue.front();
-                nodesQueue.pop();
-
-                int index = leftToRight ? i : (size - 1 - i);
-
-               
-                row[index] = node->val;
-
-                
-                if (node->left) {
-                    nodesQueue.push(node->left);
-                }
-                if (node->right) {
-                    nodesQueue.push(node->right);
-                }
+        vector<vector<int>>ans;
+        if(root==nullptr)return ans;
+        queue<TreeNode*>q;
+        q.push(root);
+        bool isleftright=true;
+        while(!q.empty()){
+            int size=q.size();
+             vector<int>row(size);
+            for(int i=0;i<size;i++){
+                TreeNode*node=q.front();
+                q.pop();
+            int index=isleftright?i:(size-1-i);
+            row[index]=node->val;
+            if(node->left){
+                q.push(node->left);
             }
-
-            
-            leftToRight = !leftToRight;
-
-           
-            result.push_back(row);
+            if(node->right){
+                q.push(node->right);
+            }
+                
+            }
+            isleftright=!isleftright;
+            ans.push_back(row);
         }
 
-       
-        return result;
-
-
+   
+    
+    return ans;
 
     }
 };
