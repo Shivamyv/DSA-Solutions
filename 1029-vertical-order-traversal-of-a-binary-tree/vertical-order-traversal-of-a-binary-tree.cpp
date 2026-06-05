@@ -12,53 +12,39 @@
 class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
-          vector<vector<int>> result;
-
-        if (root == nullptr) {
-            return result;
-        }
-
-        // Map to store the nodes at each vertical distance and level
-        map<int, map<int, priority_queue<int, vector<int>, greater<int>>>> nodesMap;
-
-        // Queue for BFS traversal (stores node along with its x and y coordinates)
-        queue<pair<TreeNode*, pair<int, int>>> q;
-        q.push({root, {0, 0}});  // (node, {x, y})
-
-        // Perform BFS
-        while (!q.empty()) {
-            auto p = q.front();
+        
+        queue<pair<TreeNode*,pair<int,int>>>q;
+        map<int,map<int,multiset<int>>>mpp;
+        q.push({root,{0,0}});
+        while(!q.empty()){
+            auto it=q.front();
             q.pop();
-            TreeNode* node = p.first;
-            int x = p.second.first;
-            int y = p.second.second;
-
-            // Add the node's value to the map at the correct x and y
-            nodesMap[x][y].push(node->val);
-
-            // Add the left child with updated coordinates to the queue
-            if (node->left != nullptr) {
-                q.push({node->left, {x - 1, y + 1}});
+            TreeNode* node=it.first;
+            int row=it.second.first;
+            int col=it.second.second;
+            mpp[col][row].insert(node->val);
+            if(node->left){
+                q.push({node->left,{row+1,col-1}});
             }
-
-            // Add the right child with updated coordinates to the queue
-            if (node->right != nullptr) {
-                q.push({node->right, {x + 1, y + 1}});
+            if(node->right){
+                q.push({node->right,{row+1,col+1}});
             }
         }
 
-        // Prepare the result by sorting keys and compiling nodes
-        for (auto& p : nodesMap) {
-            vector<int> column;
-            for (auto& q : p.second) {
-                while (!q.second.empty()) {
-                    column.push_back(q.second.top());
-                    q.second.pop();
+        vector<vector<int>>ans;
+        for(auto &node:mpp){
+            vector<int>temp;
+            for(auto &it:node.second){
+                for(auto &ite:it.second){
+                    temp.push_back(ite);
                 }
             }
-            result.push_back(column);
+             ans.push_back(temp);
         }
 
-        return result;
+
+     return ans;
+
+
     }
 };
