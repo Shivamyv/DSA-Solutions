@@ -12,45 +12,32 @@
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        
-     unordered_map<int, int> inMap;
+       int m=inorder.size();
+      int n=preorder.size();
+       unordered_map<int,int>mpp;
+       for(int i=0;i<n;i++){
+        mpp[inorder[i]]=i;
+       }
+        return build(preorder,0,n-1,inorder,0,m-1,mpp);
 
+       }    
+           TreeNode* build(vector<int>& preorder,int prestart,int prend, vector<int>& inorder,
+           int instart,int inend,unordered_map<int,int>&mpp){
+          
+             if(prestart>prend || instart>inend) return nullptr;
+               TreeNode*root=new TreeNode(preorder[prestart]);
+               int inroot=mpp[root->val];
+               int dist=inroot-instart;
+                root->left = build(preorder, prestart + 1, prestart + dist,
+                               inorder, instart, inroot - 1, mpp);
+
+           
+              root->right = build(preorder, prestart + dist + 1, prend,
+                                inorder, inroot + 1, inend, mpp);
+           
+           
+           return root;
       
-        for (int i = 0; i < inorder.size(); i++) {
-            inMap[inorder[i]]=i;
-        }
 
-       
-        return buildTree(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1, inMap);
-    }
-
-private:
-   
-    TreeNode* buildTree(vector<int>& preorder, int preStart, int preEnd,
-                        vector<int>& inorder, int inStart, int inEnd, unordered_map<int, int>& inMap) {
-       
-        if (preStart > preEnd || inStart > inEnd) {
-            return nullptr;
-        }
-
-       
-        TreeNode* root = new TreeNode(preorder[preStart]);
-
-        
-        int inRoot = inMap[root->val];
-
-       
-        int numsLeft = inRoot - inStart;
-
-      
-        root->left = buildTree(preorder, preStart + 1, preStart + numsLeft,
-                               inorder, inStart, inRoot - 1, inMap);
-
-       
-        root->right = buildTree(preorder, preStart + numsLeft + 1, preEnd,
-                                inorder, inRoot + 1, inEnd, inMap);
-
-        
-        return root;
     }
 };
