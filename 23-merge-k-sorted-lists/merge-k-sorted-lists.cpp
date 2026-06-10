@@ -11,33 +11,43 @@
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<
-            pair<int,int>,
-            vector<pair<int,int>>,
-            greater<pair<int,int>>
-        > pq;
-      for(int i=0;i<lists.size();i++){
-        if(lists[i]!=nullptr){
-            pq.push({lists[i]->val,i});
-            lists[i]=lists[i]->next;
+        auto lambda=[](ListNode* a,ListNode* b){
+            return a->val > b->val;
+
+        };
+        priority_queue<ListNode*,vector<ListNode*>,decltype(lambda)>pq(lambda);
+        for(ListNode* node:lists){
+            if(node!=nullptr){
+            pq.push(node);
+            }
         }
-      }
-      ListNode* dummy=new ListNode(-1);
-      ListNode* tail=dummy;
-      while(!pq.empty()){
-        auto[val,idx]=pq.top();
-        pq.pop();
+        if(pq.empty()) return nullptr;
+        
+            ListNode*head=pq.top();
+            pq.pop();
 
-      tail->next=new ListNode(val);
-      tail=tail->next;
-      if(lists[idx]!=nullptr){
-        pq.push({lists[idx]->val,idx});
-        lists[idx]=lists[idx]->next;
-      }
+            if(head->next!=nullptr)
+          pq.push(head->next);
+        
 
-      }
+          ListNode*tail=head;
+         
+        
+          while(!pq.empty()){
+            ListNode*curr=pq.top();
+            pq.pop();
+            tail->next=curr;
+            tail=tail->next;
+            if(curr->next!=nullptr)
+              pq.push(curr->next);
 
-     return dummy->next;
+          }
+               
+        
+
+
+   return head;
+
 
     }
 };
