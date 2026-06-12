@@ -1,8 +1,8 @@
 class Solution {
 public:
-  int mod=1e9+7;
+  long long mod=1e9+7;
 
-    long long maxdepth(int node,vector<int>adj[],vector<int>&vis){
+    long long maxdepth(int node,vector<vector<int>>&adj,vector<int>&vis){
          long long depth=0;
           vis[node]=true;
         for(auto it:adj[node]){
@@ -13,6 +13,7 @@ public:
         }
         return depth ;
     }
+
     long long power(long long a, long long b) {
     long long ans = 1;
 
@@ -29,7 +30,7 @@ public:
   
     int assignEdgeWeights(vector<vector<int>>& edges) {
         int n=edges.size()+1;
-       vector<int>adj[n+1];
+      vector<vector<int>>adj(n+1);
        for(auto it:edges){
         int u=it[0];
         int v=it[1];
