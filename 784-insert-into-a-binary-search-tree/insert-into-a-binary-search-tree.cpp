@@ -11,23 +11,23 @@
  */
 class Solution {
 public:
- TreeNode * solve(TreeNode * node,int val){
-     if(node==nullptr) return new TreeNode(val);
 
-       if(node->val > val){
+  TreeNode*solve(TreeNode*node,int val){
+      if(node==nullptr) return new TreeNode(val);
+    if(val > node->val){
+      node->right=  solve(node->right,val);
+    }
+    else{
        node->left= solve(node->left,val);
-           
-          
-       }
-       else if(node->val < val){
-      node->right= solve(node->right,val);
-     
-       }
-
-        return node;   
- }
-    
+    }
+    return node;
+         
+  }
     TreeNode* insertIntoBST(TreeNode* root, int val) {
-        return solve(root,val);
+      return solve(root,val);
+
+
+
+        
     }
 };
