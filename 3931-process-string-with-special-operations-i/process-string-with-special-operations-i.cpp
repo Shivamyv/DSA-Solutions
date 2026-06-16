@@ -1,10 +1,7 @@
 class Solution {
 public:
 bool f(char ch){
-    for(int i='a';i<='z';i++){
-        if(ch==i) return true;
-    }
-    return false;
+      return ch>='a'&& ch<='z';
 }
     string processStr(string s) {
         int n=s.length();
