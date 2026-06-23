@@ -5,6 +5,7 @@ public:
       int n=grid[0].size();
       queue<pair<int,int>>q;
       q.push({i,j});
+      vis[i][j]=1;
       int dr[]={-1,0,+1,0};
       int dc[]={0,+1,0,-1};
       while(!q.empty()){
