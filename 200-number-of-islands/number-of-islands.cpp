@@ -35,9 +35,9 @@ public:
       for(int i=0;i<m;i++){
         for(int j=0;j<n;j++){
             if(grid[i][j]=='1' && !vis[i][j]){
-                
-               bfs(i,j,vis,grid);
                 cnt++;
+               bfs(i,j,vis,grid);
+               
                
                  
                 }
