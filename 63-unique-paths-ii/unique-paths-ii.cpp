@@ -14,16 +14,16 @@ long long  f(vector<vector<int>>& obstacleGrid, vector<vector<long long>>&dp){
                  dp[i][j]=1;
                 continue;
                 }
-                long long right=0;
-                long long bottom=0;
+                long long up=0;
+                long long left=0;
                 if(i+1<n){
-                    right=dp[i+1][j];
+                    up=dp[i+1][j];
                 }
                 if(j+1<m) {
-                bottom=dp[i][j+1];
+                left=dp[i][j+1];
                 }
 
-                dp[i][j]=right+bottom;
+                dp[i][j]=up+left;
             }
         }
     
