@@ -8,7 +8,7 @@ public:
           for(int j=i;j<n;j++){
             if(nums[j]==target) cnt++;
              int len=j-i+1;
-             if(cnt>len-cnt) ans++;
+             if(cnt>len/2) ans++;
           }
         }
      return ans;
