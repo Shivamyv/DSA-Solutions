@@ -1,25 +1,28 @@
 class Solution {
 public:
-int dp[5001][301];
-int solve(int amount,vector<int>&coins,int i){
-    if(amount==0){
-        return 1;
-    }
-    if(dp[amount][i]!=-1)
-    return dp[amount][i];
+int f(int i,int amount, vector<int>& coins, vector<vector<int>>&dp){
+   int n=coins.size();
+     
+     if(amount==0) return 1;
+    if(i==n) return 0;
 
-    if(i==coins.size())
-    return 0;
-    
-    int tk=0;
-    if(coins[i]<=amount){
-        tk=solve(amount-coins[i],coins,i);
+    if(dp[i][amount]!=-1) return dp[i][amount];
+    int take=0;
+    if(coins[i]<=amount && i<n){
+        take=f(i,amount-coins[i],coins,dp);
+        
+
     }
-    int nt=solve(amount,coins,i+1);
-    return dp[amount][i]=tk+nt;
+    int nottake=f(i+1,amount,coins,dp);
+    return dp[i][amount]=take+nottake;
+
+
 }
     int change(int amount, vector<int>& coins) {
-        memset(dp,-1,sizeof(dp));
-         return solve(amount,coins,0);
+       int n=coins.size();
+        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        return f(0,amount,coins,dp);
+
+
     }
 };
