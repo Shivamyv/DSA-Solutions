@@ -23,7 +23,7 @@ public:
    for(auto it:adj[node]){
     int v=it.first;
     int edgewt=it.second;
-    if(edgewt<mini) mini=edgewt;
+   mini=min(mini,edgewt);
 
     if(!vis[v]) {
         vis[v]=true;
