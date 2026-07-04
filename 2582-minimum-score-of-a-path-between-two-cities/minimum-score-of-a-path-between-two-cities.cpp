@@ -11,12 +11,12 @@ public:
 
     }        
     int mini=INT_MAX;
-   queue<pair<int,int>>q;
+   queue<int>q;
   vector<int>vis(n+1,false);
-   q.push({1,0});
+   q.push(1);
   vis[1]=true;
    while(!q.empty()){
-    auto[node,dist]=q.front();
+    int node=q.front();
     q.pop();
    
   
@@ -27,7 +27,7 @@ public:
 
     if(!vis[v]) {
         vis[v]=true;
-        q.push({v,edgewt});
+        q.push(v);
     }
    }
    }
