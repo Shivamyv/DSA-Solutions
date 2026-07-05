@@ -4,9 +4,9 @@ public:
       vector<int>ans;
     unordered_map<int,int>mpp;
     for(int i=0;i<nums.size();i++){
-        int find=target-nums[i];
-        if(mpp.count(find)) {
-           ans.push_back(mpp[find]);
+        int need=target-nums[i];
+        if(mpp.find(need) !=mpp.end()) {
+           ans.push_back(mpp[need]);
             ans.push_back(i);
             
         }
