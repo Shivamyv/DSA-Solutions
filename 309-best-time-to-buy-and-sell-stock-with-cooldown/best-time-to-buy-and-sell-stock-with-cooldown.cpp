@@ -1,7 +1,7 @@
 class Solution {
 public:
-int dp[50001][2];
-    int f(int ind,int buy,vector<int>prices){
+int dp[5001][2];
+    int f(int ind,int buy,vector<int>&prices){
         int n=prices.size();
         if(ind>=n) return 0;
         int profit=0;
