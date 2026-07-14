@@ -1,27 +1,29 @@
 class Solution {
 public:
-    int maxProfit(int cnt, vector<int>& prices) {
-        int n=prices.size();
-        vector<vector<int>> front(2,vector<int>(cnt+1,0)),curr(2,vector<int>(cnt+1,0));
-        for(int i=n-1;i>=0;i--){
-            for(int j=0;j<2;j++){
-                for(int k=1;k<cnt+1;k++){
-                    int profit=0;
-                    if(j){
-                        int pick=-prices[i]+front[false][k];
-                        int notPick=0+front[true][k];
-                        profit=max(pick,notPick);
-                    }   
-                    else{
-                        int pick=prices[i]+front[true][k-1];
-                        int notPick=0+front[false][k];
-                        profit=max(pick,notPick);
-                    }
-                    curr[j][k]=profit;
-                }
-            }
-            front=curr;
-        }
-        return front[true][cnt];
+int dp[10001][2][101];
+int f(int ind,int buy,int k,vector<int>&prices,int cnt){
+    int n=prices.size();
+       
+       int profit=0;
+       if(ind ==n || cnt==k) return 0;
+       if(dp[ind][buy][cnt]!=-1) return dp[ind][buy][cnt];
+      if(buy==0){
+         profit=max(0+f(ind+1,0,k,prices,cnt),
+         (-1)*prices[ind]+f(ind+1,1,k,prices,cnt));
+    }
+    else {
+      profit=max(0+f(ind+1,1,k,prices,cnt),
+      prices[ind]+f(ind+1,0,k,prices,cnt+1));
+    }
+    return  dp[ind][buy][cnt]=profit;
+
+}
+    int maxProfit(int k, vector<int>& prices) {
+      int n=prices.size();
+      int cnt=0;
+      memset(dp,-1,sizeof(dp));
+      return f(0,0,k,prices,cnt);  
+
+
     }
 };
