@@ -2,14 +2,9 @@ class Solution {
 public:
 typedef long long ll;
    ll gcd(ll a,ll b){
-    while(b!=0){
-        ll temp=b;
-        b=a%b;
-        a=temp;
-    }
-    return a;
+     if(b==0) return a;
+     return gcd(b,a%b);
    }
-
     long long gcdSum(vector<int>& nums) {
          int n=nums.size();
          
