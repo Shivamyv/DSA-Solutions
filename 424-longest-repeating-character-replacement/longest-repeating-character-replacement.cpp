@@ -5,12 +5,12 @@ public:
        int l=0,r=0;
        int maxfreq=0;
        int maxlen=0;
-       int hash[26]={0};
+      unordered_map<char,int>mpp;
        while(r<n){
-          hash[s[r]-'A']++;
-          maxfreq=max(maxfreq,hash[s[r]-'A']);
+          mpp[s[r]]++;
+          maxfreq=max(maxfreq,mpp[s[r]]);
         if((r-l+1)-maxfreq >k){
-            hash[s[l]-'A']--;
+            mpp[s[l]]--;
             l++;
         }
         maxlen=max(maxlen,r-l+1);
