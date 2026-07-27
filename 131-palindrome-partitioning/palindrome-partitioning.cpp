@@ -1,38 +1,40 @@
 class Solution {
 public:
-
-void f(int index, string s, vector<string> &path, vector<vector<string>> &res){
-    if(index==s.size()){
-        res.push_back(path);
-        return;
-    }
-
-    for(int i=index;i<s.size();i++){
-        if(palindrome(s,index,i)){
-            path.push_back(s.substr(index,i-index+1));
-            f(i+1,s,path,res);
-            path.pop_back();
-        }
-    }
-}
-bool palindrome(string s,int start,int end){
-    while(start <= end){
-    if(s[start++]!=s[end--]){
-       
-        return false;
-       
-    }
+  bool check(int i,int j,string &s){
+    while(i<=j){
+        if(s[i]!=s[j]) return false;
+    i++;
+    j--;
     }
     return true;
 
-    
-}
+  }
+
+  void f(int i,string &s, vector<vector<string>> &ans,vector<string>&path){
+    int n=s.size();
+    if(i==n) {
+     ans.push_back(path);
+        
+    } 
+    for(int j=i;j<n;j++){
+       if(check(i,j,s)){
+      
+              path.push_back(s.substr(i,j-i+1));
+                f(j+1,s,ans,path);
+                path.pop_back();
+
+    }
+
+  }
+  }
+
+    vector<vector<string>> partition(string s) {
+       int n=s.size();
+       vector<vector<string>>ans;
+       vector<string>path;
+        f(0,s,ans,path);
+        return ans;
 
 
-    vector<vector<string> > partition(string s) {
-      vector<vector<string>> res;
-      vector<string> path;
-      f(0,s,path,res);
-      return res; 
     }
 };
