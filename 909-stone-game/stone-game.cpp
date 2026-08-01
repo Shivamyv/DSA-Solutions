@@ -11,6 +11,6 @@ int dp[501][501];
     bool stoneGame(vector<int>& piles) {
         int n=piles.size();
         memset(dp,-1,sizeof(dp));
-        return f(0,n-1,piles);
+        return f(0,n-1,piles) >=0;
     }
 };
