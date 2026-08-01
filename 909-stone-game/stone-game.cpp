@@ -4,8 +4,8 @@ int dp[501][501];
     int f(int i,int j,vector<int>&piles){
         if(i==j) return piles[i];
         if(dp[i][j]!=-1) return dp[i][j];
-        int left=piles[i]+f(i+1,j,piles);
-        int right=piles[j]+f(i,j-1,piles);
+        int left=piles[i]-f(i+1,j,piles);
+        int right=piles[j]-f(i,j-1,piles);
         return dp[i][j]=max(left,right);
     }
     bool stoneGame(vector<int>& piles) {
