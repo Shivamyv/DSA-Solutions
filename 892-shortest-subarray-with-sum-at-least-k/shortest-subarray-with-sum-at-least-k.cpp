@@ -3,7 +3,7 @@ public:
     int shortestSubarray(vector<int>& nums, int k) {
         int n=nums.size();
         int ans=INT_MAX;
-        vector<int>prefix(n+1,0);
+        vector<long long>prefix(n+1,0);
         prefix[0]=0;
 
         for(int i=0;i<n;i++){
