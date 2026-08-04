@@ -5,13 +5,9 @@ public:
        vector<int>ans;
        int minelement=*min_element(nums.begin(),nums.end());
        int maxelement=*max_element(nums.begin(),nums.end());
-       unordered_map<int,int>mpp;
-       for(auto it:nums){
-        mpp[it]++;
-       } 
-    
+       unordered_set<int>st(nums.begin(),nums.end());
        for(int i=minelement;i<=maxelement;i++){
-        if(mpp.find(i)==mpp.end()){
+        if(st.find(i)==st.end()){
             ans.push_back(i);
         }
        }
