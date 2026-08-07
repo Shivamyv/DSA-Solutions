@@ -10,7 +10,7 @@ public:
     int dr[]={-1,-1,0,+1,+1,+1,0,-1};
     int dc[]={0,+1,+1,+1,0,-1,-1,-1};
 
-    while(!q.empty()){
+      while(!q.empty()){
           auto it=q.front();
           q.pop();
           int row=it.first.first;
