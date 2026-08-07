@@ -21,27 +21,16 @@ public:
         int stops=it.first;
          int distnode=it.second.first;
          int node=it.second.second;
-
         
          if(stops>k) continue;
-
-         
-
          for(auto it:adj[node]){
              int adjnode=it.first;
             int edgewt=it.second;
             if(distnode+edgewt<dist[adjnode]&& stops<=k){
                 dist[adjnode]=distnode+edgewt;
                 pq.push({stops+1,{distnode+edgewt,adjnode}});
-                
-
-
             }
-            
          }
-         
-
-
       }
      if(dist[dst]==1e9) return -1;
      
