@@ -41,7 +41,7 @@ int f(int i,string &s,vector<int>&dp){
 }
     int minimumSubstringsInPartition(string s) {
        int n=s.size();
-       vector<int>dp(n,-1);
+       vector<int>dp(n+1,-1);
         return f(0,s,dp);
 
     }
