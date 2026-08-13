@@ -12,7 +12,7 @@ bool ispalindrome(int i,int j,string& s){
 int f(int i,string& s,vector<int>&dp){
     int n=s.size();
    
-     if(i==n) return 0;
+     if(i>=n) return 0;
     if(dp[i]!=-1) return dp[i];
      int ans=INT_MAX;
   
@@ -23,8 +23,6 @@ int f(int i,string& s,vector<int>&dp){
         }
     }
     return dp[i]=ans;
-       
-      
 
 
 }
@@ -32,8 +30,6 @@ int f(int i,string& s,vector<int>&dp){
     int n=s.size();
      vector<int>dp(n,-1);
     return f(0,s,dp)-1;    
-
-
 
     }
 };
