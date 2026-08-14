@@ -1,48 +1,45 @@
 class Solution {
-private: 
-    // Recursive helper function to find combinations
-    void func(int ind, int sum, vector<int> &nums, 
-              vector<int> &candidates, vector<vector<int>> &ans) {
-        // If the sum is zero, add the current combination to the result
-        if(sum == 0) {
-            ans.push_back(nums);
+public:
+    void f(int i, vector<int>& candidates, int target,
+           vector<int>& temp, vector<vector<int>>& ans) {
+
+        if(target == 0) {
+            ans.push_back(temp);
             return;
         }
 
-        // If the sum is negative or we have exhausted the candidates, return
-        if(sum < 0 || ind == candidates.size()) return; 
+        int n = candidates.size();
 
-        // Include the current candidate
-        nums.push_back(candidates[ind]); 
+        for(int j = i; j < n; j++) {
 
-        // Recursively call with updated sum and next index
-        func(ind + 1, sum - candidates[ind], nums, candidates, ans); 
+            // Skip duplicate choices at this level
+            if(j > i && candidates[j] == candidates[j - 1])
+                continue;
 
-        // Backtrack by removing the last added candidate
-        nums.pop_back(); 
+            // Since sorted, everything after this is also too large
+            if(candidates[j] > target)
+                break;
 
-        // Skip duplicates: if not picking the current candidate, 
-        // ensure the next candidate is different
-        for(int i = ind + 1; i < candidates.size(); i++) {
-            if(candidates[i] != candidates[ind]) {
-                func(i, sum, nums, candidates, ans); 
-                break; 
-            }
+            temp.push_back(candidates[j]);
+
+            // j+1 because each element can be used only once
+            f(j + 1, candidates, target - candidates[j], temp, ans);
+
+            // Backtrack
+            temp.pop_back();
         }
     }
 
-public:
-    // Main function to find all unique combinations
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        vector<vector<int>> ans; 
-        vector<int> nums; 
+    vector<vector<int>> combinationSum2(vector<int>& candidates,
+                                         int target) {
 
-        // Sort candidates to handle duplicates
-        sort(candidates.begin(), candidates.end()); 
+        sort(candidates.begin(), candidates.end());
 
-        // Start the recursive process
-        func(0, target, nums, candidates, ans);
+        vector<vector<int>> ans;
+        vector<int> temp;
 
-        return ans; 
+        f(0, candidates, target, temp, ans);
+
+        return ans;
     }
 };
