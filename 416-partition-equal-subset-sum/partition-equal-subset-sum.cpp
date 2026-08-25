@@ -6,8 +6,8 @@ bool f(int i,int target,vector<int>&nums, vector<vector<int>>&dp){
 
     if(dp[i][target]!=-1) return dp[i][target];
 
-     int nottake=f(i+1,target,nums,dp);
-     int take=0;
+     bool nottake=f(i+1,target,nums,dp);
+     bool take=false;
      if(nums[i]<=target){
         take=f(i+1,target-nums[i],nums,dp);
 
@@ -26,8 +26,6 @@ bool f(int i,int target,vector<int>&nums, vector<vector<int>>&dp){
          int diff=sum/2;
          vector<vector<int>>dp(n+1,vector<int>(diff+1,-1));
          return f(0,diff,nums,dp);
-
-
 
     }
 };
