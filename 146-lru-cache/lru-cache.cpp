@@ -15,8 +15,7 @@ public:
     }
     
     int get(int key) {
-        if(!cache.count(key))
-            return -1;
+        if(cache.find(key)==cache.end()) return -1;
         
         makeMostRecentlyUsed(key);
         return cache[key].second;
