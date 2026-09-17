@@ -1,18 +1,17 @@
 class Solution {
 public:
-    void moveZeroes(std::vector<int>& nums) {
-        int n = nums.size();
-        int i = 0;
-        
-        for (int j = 0; j < n; j++) {
-            if (nums[j] != 0) {
-                std::swap(nums[i], nums[j]);
-                i++;
+    void moveZeroes(vector<int>& nums) {
+        int n=nums.size();
+         int j=0;
+         for(int i=0;i<n;i++){
+            if(nums[i]!=0){
+                nums[j]=nums[i];
+                j++;
             }
-        }
-        
-        for (int k = i; k < n; k++) {
-            nums[k] = 0;
-        }
+         }
+         while(j<n){
+            nums[j]=0;
+            j++;
+         }
     }
 };
