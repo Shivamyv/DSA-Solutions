@@ -15,10 +15,8 @@ public:
         ans+=mpp[rem];
        }
         mpp[rem]++;
-       
+        
        }
-       
-
      return ans;
         
     }
