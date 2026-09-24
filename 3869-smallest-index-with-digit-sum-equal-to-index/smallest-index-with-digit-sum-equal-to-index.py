@@ -1,9 +1,5 @@
-class Solution(object):
-    def smallestIndex(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
+class Solution:
+    def smallestIndex(self, nums: List[int]) -> int:
         n=len(nums)
         for i in range(0,n):
             sum=0
@@ -15,5 +11,3 @@ class Solution(object):
             if(sum==i):
              return i
         return -1
-
-        
