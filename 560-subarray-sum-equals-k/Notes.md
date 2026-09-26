@@ -1,1 +1,1 @@
-<h2>subarray-sum-equals-k Notes</h2><hr>[ Time taken: 2d 5hrs 56m 14s ]
+<h2>subarray-sum-equals-k Notes</h2><hr>[ Time taken: 5m 28s ]
