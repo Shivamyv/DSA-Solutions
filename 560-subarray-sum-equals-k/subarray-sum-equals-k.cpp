@@ -1,20 +1,19 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-        int n=nums.size();
-        int l=0,r=0;
-        int sum=0;
-        int cnt=0;
-        unordered_map<int,int>mpp;
-        mpp[0]=1;
-       for(int r:nums){
-            sum+=r;
-            if(mpp.find(sum-k)!=mpp.end()){
-               cnt+= mpp[sum-k];
-            }
-            mpp[sum]++;
+       int n=nums.size();
+       unordered_map<int,int>mpp;
+       mpp[0]=1;
+       int sum=0;
+       int cnt=0;
+       for(int i=0;i<n;i++){
+        sum+=nums[i];
+        if(mpp.find(sum-k)!=mpp.end()){
+             cnt+=mpp[sum-k];
         }
-        return cnt;
+        mpp[sum]++;
+       }
+       return cnt;
 
     }
 };
